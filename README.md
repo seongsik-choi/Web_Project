@@ -13,7 +13,6 @@
      └─/main/resources/static	 <- Image, CSS, Javascript등 static files 저장  
      └─/main/resources/application.properties   <- 환경 설정에 사용할 properties 정의  
      └─/main/webapp/WEB-INF       <- Web Service를 위한 dic  
-
 ---
  **3) Technology**
   - O/S : Windows 10  
