@@ -14,6 +14,7 @@
      └─/main/resources/application.properties   <- 환경 설정에 사용할 properties 정의  
      └─/main/webapp/WEB-INF       <- Web Service를 위한 dic  
 
+---
  **3) Technology**
   - O/S : Windows 10  
   - Language : JAVA (JDK1.8.0_281)   
@@ -22,3 +23,5 @@
   - Framework : Spring 4.6.0, Mybatis 3.4.1, BootStrap 3.4.1  
   - Technology : JDBC, HTML 5.0, CSS3, JSP  
   - Tools : STS4, Amateras UML, Amateras ERD, SQLdeveloper  
+---
+
