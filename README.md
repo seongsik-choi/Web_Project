@@ -70,6 +70,25 @@
 프로젝트 선택 -> Run As -> Spring Boot App 실행
 11. WEB 접속 확인 : http://localhost:9091
 ~~~
-
-
 ---
+**5) 개발과정**
+~~~
+- 0404 :
+ 1) style.css 제작 : @CHARSET "UTF-8";: CSS 인코딩 방식 지정
+    ▷/src/main/resources/static/css/style.css
+ 2) Main 페이지 제작
+     Controller(dev.mvc.study_maria.HomeCont.java) : @RequestMapping, setViewName 설정
+     top, bottom jsp 제작 -> index.jsp에서 <jsp:include> 설정
+ 3) Amateras ERD 를 통한 DMBS 모델링
+    /WEB-INF/doc/스터디그룹' dic 생성 -> ER Diagram file 생성
+    설정 : MySQL(MariaDB) / JDBC Driver: org.gjt.mm.mysql.Driver / Database URI: jdbc:mysql://localhost:3306/resort
+    TABLE(stugrp) 생성 : Logical, Physical Modeling 
+    Column 생성 : DataTpye 참고, EX) MYSQL은 Varchar(10)이면 모든 문자를 10자 저장 가능 
+ 4) SQL 생성 : Export -> DDL -> Constraints Generate 지정 해제 -> stugrp_c.sql
+    SEQUENCE 테이블 추가
+ 5) VO제작 및 MyBATIS 설정
+     - VO : stugrp_c.sql에서 제작한 컬럼 값들 기반 private 멤벼변수 지정 + Getter, Setter 선언
+       -> 패키지명 : dev.mvc.stugrp / 클래스명 : StugrpVO.java
+     - MyBATIS 설정 : @PropertySource와 @MapperScan 설정
+       -> 패키지명 : dev.mvc.study_maria / 클래스명 : DatabaseConfiguration .java
+~~~
