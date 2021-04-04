@@ -9,7 +9,7 @@
 ├─Project and External Dependencies   <- gradle에 명시한 Spring project 의존 lib 목록  
 └─src   <- jsp 등 resource dic  
      └─/main/java   <- JAVA source dic    
-            └──/dev.mvc.study_maria.StartApplication.java   <- main method가 존재하는 JAVAclass(구성과 최초 실행)  
-     └─/main/resources/static	 <- Image, CSS, Javascript등 static 파일들 저장  
+            └──/기본패키지/StartApplication.java   <- main method가 존재하는 JAVA class(구성과 최초 실행)  
+     └─/main/resources/static	 <- Image, CSS, Javascript등 static files 저장  
      └─/main/resources/application.properties   <- 환경 설정에 사용할 properties 정의  
      └─/main/webapp/WEB-INF       <- Web Service를 위한 dic  
