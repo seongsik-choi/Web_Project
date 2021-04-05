@@ -109,27 +109,34 @@
 DROP TABLE stugrp;
 CREATE TABLE stugrp(
 		stugrpno                      		INT(10)		 NOT NULL		 PRIMARY KEY AUTO_INCREMENT COMMENT '스터디 그룹 번호',
-		name                          		VARCHAR(50)		 NOT NULL COMMENT '스터디 그룹 이름',
+		stugrpname                          		VARCHAR(50)		 NOT NULL COMMENT '스터디 그룹 이름',
 		seqno                         		MEDIUMINT(10)		 NOT NULL COMMENT '출력 순서',
 		visible                       		CHAR(1)		 DEFAULT 'Y'		 NOT NULL COMMENT '출력 모드',
 		rdate                         		DATETIME		 NOT NULL COMMENT '그룹 생성일'
 ) COMMENT='스터디그룹';
 
+COMMENT ON TABLE stugrp is '스터디  그룹';
+COMMENT ON COLUMN stugrp.stugrpno is '스터디 그룹 번호';
+COMMENT ON COLUMN stugrp.stugrpname is '스터디 그룹 이름';
+COMMENT ON COLUMN stugrp.seqno is '출력 순서';
+COMMENT ON COLUMN stugrp.visible is '출력 모드';
+COMMENT ON COLUMN stugrp.rdate is '그룹 생성일';
+
 -- Create, 등록 : CREATE + INSERT
-INSERT INTO stugrp(name, seqno, visible, rdate)
+INSERT INTO stugrp(stugrpname, seqno, visible, rdate)
 VALUES('토익 스터디', 1, 'Y', NOW());
 
-INSERT INTO stugrp(name, seqno, visible, rdate)
+INSERT INTO stugrp(stugrpname, seqno, visible, rdate)
 VALUES('정보처리기사 스터디', 2, 'Y', NOW());
 
-INSERT INTO stugrp(name, seqno, visible, rdate)
+INSERT INTO stugrp(stugrpname, seqno, visible, rdate)
 VALUES('SQLD 스터디', 3, 'Y', NOW());  
 
-INSERT INTO stugrp(name, seqno, visible, rdate)
+INSERT INTO stugrp(stugrpname, seqno, visible, rdate)
 VALUES('정보보안기사 스터디', 4, 'Y', NOW());  
 
 -- Read, 조회 : 한 건의 레코드를 읽는 것
-SELECT stugrpno, name, seqno, visible, rdate FROM stugrp
+SELECT stugrpno, stugrpname, seqno, visible, rdate FROM stugrp
 WHERE stugrpno = 1;
 
 -- SELECT * FROM stugrp;
