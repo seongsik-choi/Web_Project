@@ -91,4 +91,10 @@
        -> 패키지명 : dev.mvc.stugrp / 클래스명 : StugrpVO.java
      - MyBATIS 설정 : @PropertySource와 @MapperScan 설정
        -> 패키지명 : dev.mvc.study_maria / 클래스명 : DatabaseConfiguration .java
+ 6) 접속 설정
+  server.bat 실행 -> root.bat 실행
+  MariaDB [(none)]> use study  <- 자신의 DB 사용
+  Database changed
+  MariaDB [study]>
+
 ~~~
