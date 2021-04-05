@@ -73,7 +73,7 @@
 ---
 **5) 개발과정**
 ~~~
-- 0404 :
+- 0402 :
  1) style.css 제작 : @CHARSET "UTF-8";: CSS 인코딩 방식 지정
     ▷/src/main/resources/static/css/style.css
  2) Main 페이지 제작
@@ -96,5 +96,42 @@
   MariaDB [(none)]> use study  <- 자신의 DB 사용
   Database changed
   MariaDB [study]>
+~~~
 
+~~~
+- 0405 : 
+ 1) MariaDB Client HeidiSQL 다운
+ 2) HeidiSQL에서 stugrp_c.sql 작업
+/**********************************/
+/* Table Name: 스터디그룹 */
+/**********************************/
+-- MYSQL : FROM이 필요 없음, sysdate(Oracle)<->NOW()(MYSQL), SEQUENCE TABLE 필요 없음.
+DROP TABLE stugrp;
+CREATE TABLE stugrp(
+		stugrpno                      		INT(10)		 NOT NULL		 PRIMARY KEY AUTO_INCREMENT COMMENT '스터디 그룹 번호',
+		name                          		VARCHAR(50)		 NOT NULL COMMENT '스터디 그룹 이름',
+		seqno                         		MEDIUMINT(10)		 NOT NULL COMMENT '출력 순서',
+		visible                       		CHAR(1)		 DEFAULT 'Y'		 NOT NULL COMMENT '출력 모드',
+		rdate                         		DATETIME		 NOT NULL COMMENT '그룹 생성일'
+) COMMENT='스터디그룹';
+
+-- Create, 등록 : CREATE + INSERT
+INSERT INTO stugrp(name, seqno, visible, rdate)
+VALUES('토익 스터디', 1, 'Y', NOW());
+
+INSERT INTO stugrp(name, seqno, visible, rdate)
+VALUES('정보처리기사 스터디', 2, 'Y', NOW());
+
+INSERT INTO stugrp(name, seqno, visible, rdate)
+VALUES('SQLD 스터디', 3, 'Y', NOW());  
+
+INSERT INTO stugrp(name, seqno, visible, rdate)
+VALUES('정보보안기사 스터디', 4, 'Y', NOW());  
+
+-- Read, 조회 : 한 건의 레코드를 읽는 것
+SELECT stugrpno, name, seqno, visible, rdate FROM stugrp
+WHERE stugrpno = 1;
+
+-- SELECT * FROM stugrp;
+SELECT * FROM stugrp; 
 ~~~
