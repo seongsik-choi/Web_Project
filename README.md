@@ -102,43 +102,85 @@
 - 0405 : 
  1) MariaDB Client HeidiSQL 다운
  2) HeidiSQL에서 stugrp_c.sql 작업
+-- MYSQL : FROM이 필요 없음, sysdate(Oracle)<->NOW()(MYSQL), SEQUENCE TABLE 필요 없음.
 /**********************************/
 /* Table Name: 스터디그룹 */
 /**********************************/
--- MYSQL : FROM이 필요 없음, sysdate(Oracle)<->NOW()(MYSQL), SEQUENCE TABLE 필요 없음.
 DROP TABLE stugrp;
 CREATE TABLE stugrp(
-		stugrpno                      		INT(10)		 NOT NULL		 PRIMARY KEY AUTO_INCREMENT COMMENT '스터디 그룹 번호',
-		stugrpname                          		VARCHAR(50)		 NOT NULL COMMENT '스터디 그룹 이름',
+		stugrpno                      	INT(10)		 NOT NULL		 PRIMARY KEY AUTO_INCREMENT COMMENT '스터디 그룹 번호',
+		stugrpname                    VARCHAR(50)		 NOT NULL COMMENT '스터디 그룹 이름',
+		stugrpex                      		VARCHAR(300)		 NULL  COMMENT '스터디 그룹 설명',
 		seqno                         		MEDIUMINT(10)		 NOT NULL COMMENT '출력 순서',
-		visible                       		CHAR(1)		 DEFAULT 'Y'		 NOT NULL COMMENT '출력 모드',
 		rdate                         		DATETIME		 NOT NULL COMMENT '그룹 생성일'
 ) COMMENT='스터디그룹';
 
-COMMENT ON TABLE stugrp is '스터디  그룹';
+COMMENT ON TABLE stugrp is '스터디 그룹';
 COMMENT ON COLUMN stugrp.stugrpno is '스터디 그룹 번호';
 COMMENT ON COLUMN stugrp.stugrpname is '스터디 그룹 이름';
+COMMENT ON COLUMN stugrp.stugrpex is '스터디 그룹 설명';
 COMMENT ON COLUMN stugrp.seqno is '출력 순서';
-COMMENT ON COLUMN stugrp.visible is '출력 모드';
-COMMENT ON COLUMN stugrp.rdate is '그룹 생성일';
+COMMENT ON COLUMN stugrp.rdate IS '그룹 생성일';
 
 -- Create, 등록 : CREATE + INSERT
-INSERT INTO stugrp(stugrpname, seqno, visible, rdate)
-VALUES('토익 스터디', 1, 'Y', NOW());
+INSERT INTO stugrp(stugrpname, stugrpex, seqno, rdate)
+VALUES('토익 스터디', '토익스터디 그룹입니다 환영합니다!', 1, NOW());
 
-INSERT INTO stugrp(stugrpname, seqno, visible, rdate)
-VALUES('정보처리기사 스터디', 2, 'Y', NOW());
+INSERT INTO stugrp(stugrpname, stugrpex, seqno, rdate)
+VALUES('자격증 스터디', '자격증스터디 그룹입니다 환영합니다!', 2, NOW());
 
-INSERT INTO stugrp(stugrpname, seqno, visible, rdate)
-VALUES('SQLD 스터디', 3, 'Y', NOW());  
-
-INSERT INTO stugrp(stugrpname, seqno, visible, rdate)
-VALUES('정보보안기사 스터디', 4, 'Y', NOW());  
+INSERT INTO stugrp(stugrpname, stugrpex, seqno, rdate)
+VALUES('정보처리기사 스터디', '정보처리기사스터디 그룹입니다 환영합니다!', 3, NOW());
 
 -- Read, 조회 : 한 건의 레코드를 읽는 것
-SELECT stugrpno, stugrpname, seqno, visible, rdate FROM stugrp
+SELECT stugrpno, stugrpname, stugrpex, seqno, rdate FROM stugrp
 WHERE stugrpno = 1;
+
+-- List, 목록
+SELECT stugrpno, stugrpname, stugrpex, seqno, rdate
+FROM stugrp
+ORDER BY stugrpno ASC;
+
+-- Read, 조회
+SELECT stugrpno, stugrpname, stugrpex, seqno, rdate
+FROM stugrp
+WHERE stugrpno = 1;
+
+-- Update, 수정, PK는 일반적으로 update 불가능, 컬럼의 특징을 파악후 변경여부 결정,
+-- WHERE 절에 PK 컬럼 명시
+UPDATE stugrp
+SET stugrpname='새로운 스터디', stugrpname='새로운 스터디 그룹입니다' seqno=2
+WHERE stugrpno=1;
+
+-- Delete, 삭제
+DELETE FROM stugrp
+WHERE stugrpno=3;
 
 -- SELECT * FROM stugrp;
 SELECT * FROM stugrp; 
+~~~
+
+~~~
+- 0406 : [15][Stugrp] Stugrp 등록 기능 제작(INSERT~ )
+ 
+ 1) stugrp_c.sql 기반 작업 절차
+▶ stugrp(Studygroup) Table 기반 작업 명세
+▶ create.jsp(그룹 등록) / create.jsp(그룹 등록 확인)
+ - MyBATIS ▷ /src/main/resources/mybatis/stugrp.xml : INSERT 추가하기
+ - DAO interface ▷ dev.mvc.stugrp.StugrpDAOInter.java : DBMS SQL 실행 객체
+ - Process interface ▷ dev.mvc.stugrp.StugrpProcInter.java : DBMS 접속이 아닌 알고리즘 및 제어문 선언
+ - Process class ▷ dev.mvc.stugrp.StugrpProc.java : DI 구현, beans의 자동 생성
+ - Controller class ▷ dev.mvc.stugrp.StugrpCont.java : 실행 주소의 조합
+ - View: JSP ▷ /webapp/WEB-INF/views/stugrp/create.jsp : 등록 화면
+               ▷ /webapp/WEB-INF/views/stugrp/create_msg.jsp : 등록 처리 메시지 화면
+
+  2) stugrp_c.sql 기반 작업 절차
+ ▶ list.jsp(등록화면과 등록된 그룹목록의 결합)
+  - stugrp_c.sql : ORDER BY로 등록된 Record 정렬
+  - MyBATIS ▷ /src/main/resources/stugrp.xml : .sql에 작성했던 정렬문 추가로 DMBS 접속 확인
+  - DAO interface ▷ dev.mvc.stugrp.StugrpDAOInter.java : DBMS SQL 실행 객체
+  - Process interface ▷ dev.mvc.stugrp.StugrpProcInter.java : DBMS 접속이 아닌 알고리즘 및 제어문 선언
+  - Process class ▷ dev.mvc.stugrp.StugrpProc.java : DI 구현, beans의 자동 생성
+  - Controller class ▷ dev.mvc.stugrp.StugrpCont.java : 실행 주소의 조합
+  - View: JSP ▷ /webapp/WEB-INF/views/stugrp/list.jsp : 등록화면과 등록된 그룹목록의 결합
 ~~~
