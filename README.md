@@ -122,7 +122,7 @@ COMMENT ON COLUMN stugrp.stugrpex is '스터디 그룹 설명';
 COMMENT ON COLUMN stugrp.seqno is '출력 순서';
 COMMENT ON COLUMN stugrp.rdate IS '그룹 생성일';
 
--- Create, 등록 : CREATE + INSERT
+-- ★★★Create, 등록 : CREATE + INSERT
 INSERT INTO stugrp(stugrpname, stugrpex, seqno, rdate)
 VALUES('토익 스터디', '토익스터디 그룹입니다 환영합니다!', 1, NOW());
 
@@ -132,55 +132,72 @@ VALUES('자격증 스터디', '자격증스터디 그룹입니다 환영합니�
 INSERT INTO stugrp(stugrpname, stugrpex, seqno, rdate)
 VALUES('정보처리기사 스터디', '정보처리기사스터디 그룹입니다 환영합니다!', 3, NOW());
 
--- Read, 조회 : 한 건의 레코드를 읽는 것
+-- ★★★Read, 조회 : 한 건의 레코드를 읽는 것
 SELECT stugrpno, stugrpname, stugrpex, seqno, rdate FROM stugrp
 WHERE stugrpno = 1;
 
--- List, 목록
+-- ★★★List, 목록
 SELECT stugrpno, stugrpname, stugrpex, seqno, rdate
 FROM stugrp
 ORDER BY stugrpno ASC;
 
--- Read, 조회
+-- ★★★Read, 조회
 SELECT stugrpno, stugrpname, stugrpex, seqno, rdate
 FROM stugrp
 WHERE stugrpno = 1;
 
--- Update, 수정, PK는 일반적으로 update 불가능, 컬럼의 특징을 파악후 변경여부 결정,
--- WHERE 절에 PK 컬럼 명시
+-- ★★★Update, 수정, PK는 일반적으로 update 불가능, 컬럼의 특징을 파악후 변경여부 결정,
+-- ★★★WHERE 절에 PK 컬럼 명시
 UPDATE stugrp
 SET stugrpname='새로운 스터디', stugrpname='새로운 스터디 그룹입니다' seqno=2
 WHERE stugrpno=1;
 
--- Delete, 삭제
+-- ★★★Delete, 삭제
 DELETE FROM stugrp
 WHERE stugrpno=3;
 
--- SELECT * FROM stugrp;
+-- ★★★SELECT * FROM stugrp;
 SELECT * FROM stugrp; 
 ~~~
 
 ~~~
-- 0406 : [15][Stugrp] Stugrp 등록 기능 제작(INSERT~ )
- 
- 1) stugrp_c.sql 기반 작업 절차
-▶ stugrp(Studygroup) Table 기반 작업 명세
-▶ create.jsp(그룹 등록) / create.jsp(그룹 등록 확인)
- - MyBATIS ▷ /src/main/resources/mybatis/stugrp.xml : INSERT 추가하기
+- 0406~7 : 
+[15][Stugrp] Stugrp 등록 기능 제작(INSERT~ )
+  ▶ create.jsp(그룹 등록) / create_msg.jsp(그룹 등록 확인 메시지 창)
+[16][Stugrp] Categrp 목록 출력 기능 제작(SELECT ~ FROM ~ ORDER BY ~), Bootstrap 적용, 등록 기능의 결합
+  ▶ list.jsp(등록화면 윗쪽 + 등록된 그룹목록)
+
+[17][Stugrp] Stugrp 조회, 수정폼 기능의 제작, JSP 수정과 목록의 결합  : 조회폼
+  ▶ read_update.jsp(목록 확인창에서 등록된 그룹 조회, 수정준비 페이지)
+[18][Stugrp] Stugrp 수정 처리 기능의 제작(UPDATE ~ SET ~ WHERE ~) : 조회처리
+  ▶ update_msg.jsp(저장 버튼클릭시 수정처리 완료 메시지 페이지)
+
+[19][Stugrp] Stugrp 삭제 폼 기능의 제작, JSP 삭제와 목록의 결합  : 삭제폼
+  ▶ read_delete.jsp(삭제 글리크톤 클릭 시 출력되는 삭제 준비 폼)
+[20][Stugrp] Stugrp 삭제 처리 기능의 제작(DELETE FROM처~ WHERE ~)  : 삭제처리
+  ▶ delete_msg.jsp(삭제 버튼클릭시 삭제처리 완료 메시지 페이지)
+
+- stugrp_c.sql 기반 작업 절차
+핵심 : CRUD Matrix
+- stugrp(Studygroup) Table 기반 작업 명세
+▶ create.jsp / create_msg.jsp : ★★★Create, 등록 : CREATE + INSERT
+▶ list.jsp : ★★★List, 다중목록(ORDER BY)
+▶ read_update.jsp + read_delete.jsp : ★★★Read, 단일조회(WHERE)
+▶ update_msg.jsp : ★★★Update, 수정
+
+★ Spring Boot Process
+ - MyBATIS ▷ /src/main/resources/mybatis/stugrp.xml : 데이터베이스 연결
  - DAO interface ▷ dev.mvc.stugrp.StugrpDAOInter.java : DBMS SQL 실행 객체
+ - DAO class Spring : Spring FrameWork에 의해 자동 구현
  - Process interface ▷ dev.mvc.stugrp.StugrpProcInter.java : DBMS 접속이 아닌 알고리즘 및 제어문 선언
  - Process class ▷ dev.mvc.stugrp.StugrpProc.java : DI 구현, beans의 자동 생성
  - Controller class ▷ dev.mvc.stugrp.StugrpCont.java : 실행 주소의 조합
- - View: JSP ▷ /webapp/WEB-INF/views/stugrp/create.jsp : 등록 화면
-               ▷ /webapp/WEB-INF/views/stugrp/create_msg.jsp : 등록 처리 메시지 화면
-
-  2) stugrp_c.sql 기반 작업 절차
- ▶ list.jsp(등록화면과 등록된 그룹목록의 결합)
-  - stugrp_c.sql : ORDER BY로 등록된 Record 정렬
-  - MyBATIS ▷ /src/main/resources/stugrp.xml : .sql에 작성했던 정렬문 추가로 DMBS 접속 확인
-  - DAO interface ▷ dev.mvc.stugrp.StugrpDAOInter.java : DBMS SQL 실행 객체
-  - Process interface ▷ dev.mvc.stugrp.StugrpProcInter.java : DBMS 접속이 아닌 알고리즘 및 제어문 선언
-  - Process class ▷ dev.mvc.stugrp.StugrpProc.java : DI 구현, beans의 자동 생성
-  - Controller class ▷ dev.mvc.stugrp.StugrpCont.java : 실행 주소의 조합
-  - View: JSP ▷ /webapp/WEB-INF/views/stugrp/list.jsp : 등록화면과 등록된 그룹목록의 결합
+ - View: JSP ▷ /webapp/WEB-INF/views/stugrp/ 
+     create.jsp : 등록 화면
+     create_msg.jsp : 등록 처리 메시지 화면
+     list.jsp : 등록화면과 등록된 그룹목록의 결합
+     read_update.jsp : 목록 확인창에서 등록된 그룹 조회, 수정준비 페이지
+     update_msg.jsp : 저장 버튼클릭시 수정처리 완료 메시지 페이지
+     read_delete.jsp : 삭제 글리크톤 클릭 시 출력되는 삭제 준비 폼
+     delete_msg.jsp : 삭제 버튼클릭시 삭제처리 완료 메시지 페이지
 ~~~
