@@ -177,6 +177,10 @@ SELECT * FROM stugrp;
 [20][Stugrp] Stugrp 삭제 처리 기능의 제작(DELETE FROM처~ WHERE ~)  : 삭제처리
   ▶ delete_msg.jsp(삭제 버튼클릭시 삭제처리 완료 메시지 페이지)
 
+[21][Categrp] Categrp 출력 순서의 변경 제작(UPDATE ~ SET ~ WHERE ~)
+  ▶ update_seqno_up_msg.jsp update_seqno_down_msg.jsp 
+     (우선 순위 상.하향 글리피콘 클릭시 동작, 메시지 페이지) -> 결과는 list.jsp에 적용
+
 - stugrp_c.sql 기반 작업 절차
 핵심 : CRUD Matrix
 - stugrp(Studygroup) Table 기반 작업 명세
@@ -200,4 +204,5 @@ SELECT * FROM stugrp;
      update_msg.jsp : 저장 버튼클릭시 수정처리 완료 메시지 페이지
      read_delete.jsp : 삭제 글리크톤 클릭 시 출력되는 삭제 준비 폼
      delete_msg.jsp : 삭제 버튼클릭시 삭제처리 완료 메시지 페이지
+     update_seqno_up_msg.jsp update_seqno_down_msg.jsp : 우선순위 상.하향 글리피콘 처리 메시지
 ~~~
