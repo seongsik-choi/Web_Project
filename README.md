@@ -186,8 +186,12 @@ SELECT * FROM stugrp;
 - stugrp(Studygroup) Table 기반 작업 명세
 ▶ create.jsp / create_msg.jsp : ★★★Create, 등록 : CREATE + INSERT
 ▶ list.jsp : ★★★List, 다중목록(ORDER BY)
-▶ read_update.jsp + read_delete.jsp : ★★★Read, 단일조회(WHERE)
-▶ update_msg.jsp : ★★★Update, 수정
+▶ read_update.jsp : ★★★Read, 단일조회(WHERE)
+  ▶ update_msg.jsp : ★★★Update, 수정
+▶ read_delete.jsp : ★★★Read, 단일조회(WHERE)
+  ▶ delete_msg.jsp : ★★★Delete, 삭제
+---
+ ▶ update_seqno_up_msg.jsp : ★★★Update, 수정
 
 ★ Spring Boot Process
  - MyBATIS ▷ /src/main/resources/mybatis/stugrp.xml : 데이터베이스 연결
