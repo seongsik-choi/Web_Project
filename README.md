@@ -216,7 +216,7 @@ SELECT * FROM stugrp;
  - View: JSP3 ▷ /webapp/WEB-INF/views/stugrp/ 
      create.jsp : 등록 화면
      create_msg.jsp : 등록 처리 메시지 화면
-     list.jsp : 등록화면과 등록된 그룹목록의 결합
+     list.jsp : 등록화면과 등록된 그룹목록의 결합 + 출력목록
      read_update.jsp : 목록 확인창에서 등록된 그룹 조회, 수정준비 페이지
      update_msg.jsp : 저장 버튼클릭시 수정처리 완료 메시지 페이지
      read_delete.jsp : 삭제 글리크톤 클릭 시 출력되는 삭제 준비 폼
