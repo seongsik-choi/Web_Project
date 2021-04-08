@@ -161,7 +161,7 @@ SELECT * FROM stugrp;
 ~~~
 
 ~~~
-- 0406~7 : View.jsp 작업
+- 0406~7 : CRUD SQL 작성 및 View.jsp 작업
 [15][Stugrp] Stugrp 등록 기능 제작(INSERT~ )
   ▶ create.jsp(그룹 등록) / create_msg.jsp(그룹 등록 확인 메시지 창)
 [16][Stugrp] Categrp 목록 출력 기능 제작(SELECT ~ FROM ~ ORDER BY ~), Bootstrap 적용, 등록 기능의 결합
