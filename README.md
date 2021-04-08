@@ -197,7 +197,7 @@ SELECT * FROM stugrp;
   ▶ delete_msg.jsp : ★★★List, 다중목록(ORDER BY)
 ---
  ▶ update_seqno_up or down_msg.jsp : ★★★Update, 수정
- ▶ StugrpCont.java list() method update, redirect  : SELECET
+ ▶ StugrpCont.java list() method update, redirect  : ★★★List, 다중목록(ORDER BY)
 
 ★ Spring Boot Process
  - MyBATIS ▷ /src/main/resources/mybatis/stugrp.xml : 데이터베이스 연결
