@@ -164,12 +164,12 @@ SELECT * FROM stugrp;
 - 0406~7~8 : CRUD SQL 작성 및 View.jsp 작업
 [15][Stugrp] Stugrp 등록 기능 제작(INSERT~ )
   ▶ create.jsp(그룹 등록) / create_msg.jsp(그룹 등록 확인 메시지 창)
-[16][Stugrp] Categrp 목록 출력 기능 제작(SELECT ~ FROM ~ ORDER BY ~), Bootstrap 적용, 등록 기능의 결합
+[16][Stugrp] Stugrp 목록 출력 기능 제작(SELECT ~ FROM ~ ORDER BY ~), Bootstrap 적용, 등록 기능의 결합
   ▶ list.jsp(등록화면 윗쪽 + 등록된 그룹목록)
 
 [17][Stugrp] Stugrp 조회, 수정폼 기능의 제작, JSP 수정과 목록의 결합  : 조회폼
   ▶ read_update.jsp(목록 확인창에서 등록된 그룹 조회, 수정준비 페이지)
-[18][Stugrp] Stugrp 수정 처리 기능의 제작(UPDATE ~ SET ~ WHERE ~) : 조회처리
+[18][Stugrp] Stugrp 수정 처리 기능의 제작(UPDATE ~ SET ~ WHERE ~) : 수정처리
   ▶ update_msg.jsp(저장 버튼클릭시 수정처리 완료 메시지 페이지)
 
 [19][Stugrp] Stugrp 삭제 폼 기능의 제작, JSP 삭제와 목록의 결합  : 삭제폼
