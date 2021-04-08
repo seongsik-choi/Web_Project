@@ -161,7 +161,7 @@ SELECT * FROM stugrp;
 ~~~
 
 ~~~
-- 0406~7 : CRUD SQL 작성 및 View.jsp 작업
+- 0406~7~8 : CRUD SQL 작성 및 View.jsp 작업
 [15][Stugrp] Stugrp 등록 기능 제작(INSERT~ )
   ▶ create.jsp(그룹 등록) / create_msg.jsp(그룹 등록 확인 메시지 창)
 [16][Stugrp] Categrp 목록 출력 기능 제작(SELECT ~ FROM ~ ORDER BY ~), Bootstrap 적용, 등록 기능의 결합
@@ -177,10 +177,15 @@ SELECT * FROM stugrp;
 [20][Stugrp] Stugrp 삭제 처리 기능의 제작(DELETE FROM처~ WHERE ~)  : 삭제처리
   ▶ delete_msg.jsp(삭제 버튼클릭시 삭제처리 완료 메시지 페이지)
 
-[21][Categrp] Categrp 출력 순서의 변경 제작(UPDATE ~ SET ~ WHERE ~)
+[21][Stugrp] Stugrp 출력 순서의 변경 제작(UPDATE ~ SET ~ WHERE ~)
   ▶ update_seqno_up_msg.jsp update_seqno_down_msg.jsp 
      (우선 순위 상.하향 글리피콘 클릭시 동작, 메시지 페이지) -> 결과는 list.jsp에 적용
 
+[22][Stugrp] 출력 순서별 목록 출력 기능 제작(SELECT ~ FROM ~ ORDER BY ~), redirect의 적용
+   ▶ StugrpCont.java list() method update, redirect 적용
+
+[23][Stugrp] Stugrp 출력 모드의 변경(UPDATE ~ SET ~ WHERE ~ ) : 출력모드(Y,N 이 없기에 샤사용No)
+ 
 - stugrp_c.sql 기반 작업 절차
 핵심 : CRUD Matrix
 - stugrp(Studygroup) Table 기반 작업 명세
@@ -189,9 +194,10 @@ SELECT * FROM stugrp;
 ▶ read_update.jsp : ★★★Read, 단일조회(WHERE)
   ▶ update_msg.jsp : ★★★Update, 수정
 ▶ read_delete.jsp : ★★★Read, 단일조회(WHERE)
-  ▶ delete_msg.jsp : ★★★Delete, 삭제
+  ▶ delete_msg.jsp : ★★★List, 다중목록(ORDER BY)
 ---
- ▶ update_seqno_up_msg.jsp : ★★★Update, 수정
+ ▶ update_seqno_up or down_msg.jsp : ★★★Update, 수정
+ ▶ StugrpCont.java list() method update, redirect  : SELECET
 
 ★ Spring Boot Process
  - MyBATIS ▷ /src/main/resources/mybatis/stugrp.xml : 데이터베이스 연결
@@ -200,7 +206,14 @@ SELECT * FROM stugrp;
  - Process interface ▷ dev.mvc.stugrp.StugrpProcInter.java : DBMS 접속이 아닌 알고리즘 및 제어문 선언
  - Process class ▷ dev.mvc.stugrp.StugrpProc.java : DI 구현, beans의 자동 생성
  - Controller class ▷ dev.mvc.stugrp.StugrpCont.java : 실행 주소의 조합
- - View: JSP ▷ /webapp/WEB-INF/views/stugrp/ 
+
+ - View: JSP1 ▷ /webapp/WEB-INF/views/
+     index.jsp : content_body 부분, jsp include를 사용한 top.jsp ,bottom.jsp 호출
+
+ - View: JSP2 ▷ /webapp/WEB-INF/views/menu/
+    bottom.jsp, top.jsp : jsp include 활용, Content_header와 body 부분
+
+ - View: JSP3 ▷ /webapp/WEB-INF/views/stugrp/ 
      create.jsp : 등록 화면
      create_msg.jsp : 등록 처리 메시지 화면
      list.jsp : 등록화면과 등록된 그룹목록의 결합
