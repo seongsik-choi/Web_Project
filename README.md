@@ -1,77 +1,36 @@
-# Web Personal Project : Spring Boot
-## STS 4.6.0(Spring Tool Suite4) Tree Structure  
-  **1) Did : C:/dic/WS_FRAME/study_maria**    
-  **2) package : dev.mvc.study_maria**  
-├─bin/main/dev/mvc/study_maria  <- JAVA class 실행: 내장 톰캣이 실행되어 동일하게 작동  
-│              
-├─build.gradle <- gradle build 명세, lib 정의, 빌드 및 배포 설정,  Boot 및 JAVA 버전 명시, Jar library 의존성 옵션  
-│  
-├─Project and External Dependencies   <- gradle에 명시한 Spring project 의존 lib 목록  
-└─src   <- jsp 등 resource dic  
-     └─/main/java   <- JAVA source dic    
-            └──/기본패키지/StartApplication.java   <- main method가 존재하는 JAVA class(구성과 최초 실행)  
-     └─/main/resources/static	 <- Image, CSS, Javascript등 static files 저장  
-     └─/main/resources/application.properties   <- 환경 설정에 사용할 properties 정의  
-     └─/main/webapp/WEB-INF       <- Web Service를 위한 dic  
+# Web Personal Project : DoStudy
 
----
+## 다양한 스터디 그룹을 개설하고 참여할 수 있는 Website
+
+**1) Project Subject**
+  - MariaDB기반 모델링을 토대로 Spring Boot 기반 동작하는 스터디 그룹 모임 Website를 제작한다.
+
+  **2) Main Function**
+  - 테이블은 총 6개로 '스터디 그룹', '스터디', '컨텐츠', '즐겨찾기 그룹', '즐겨찾기', '회원'이 존재한다.
+  - '스터디 그룹' 테이블은 대분류로 자격증/요리/공시 등에 대한 그룹 생성 기능을 제공한다.
+  - '스터디' 테이블은 중분류로 대분류에 해당하는 개별 스터디에 대한 생성 기능을 제공한다. '스터디 그룹'의 하위테이블로 참조관계를 갖고있다.
+  - '컨텐츠' 테이블은 소분류로 등록된 개별 스터디에 자기소개, 이름, 이미지 등을 등록하는 기능을한다. '스터디 '의 하위테이블로 참조관계를 갖고있다.
+  - '즐겨찾기 그룹'과 '즐겨찾기' 테이블은 각 지역별 스터디 카페의 홍보 글을 올릴 수 있는 기능을 제공한다. 
+  - '회원' 테이블은 회원가입 및 로그인 기능을 제공하며 이름, 아이디, 패스워드, 이메일, 주소, 회원이미지 등의 데이터를 입력할 수있다. 
+  - 테이블 간의 참조관계 및 제약조건 설정을 통해 무결성을 유지시켰다.
+  - index 화면과 각각의 View는 CDN 방식의 BootStrap과 css를 활용해 UI의 접근성을 상승시켰다.
+  - '스터디 그룹'과 '스터디' 등록 및 수정 삭제 시 Spring Controller와 AJAX 통신, JQuery를 사용해 메모리 사용을 절감하였다. 
+  - '컨텐츠'와 '회원' 레코드 등록 시 id 및 이메일 등에 대한 유효성 검사를 위해 AJAX 통신과 JQuery가 사용됐다.
+
  **3) Technology**
   - O/S : Windows 10  
   - Language : JAVA (JDK1.8.0_281)   
-  - DBMS : MariaDB, MYSQL  
-  - Web Application Server : Tomcat 9.0  
-  - Framework : Spring Boot 2.4.3, Mybatis 3.4.1, BootStrap 3.4.1  
-  - Technology : JDBC, HTML 5.0, CSS3, JSP  
+  - DBMS : MySQL, MariaDB
+  - Web Application Server : boot DEVTOOLS
+  - Framework : Spring Boot 2.4.3, Mybatis 3.4.1, BootStrap 3.4.1, JQuery
+  - Technology : JDBC, HTML5, CSS, EL, Javascript, JSON, JSP, AJAX  
   - Tools : STS4, Amateras UML, Amateras ERD, SQLdeveloper  
 ---
-**4) 기본 설정**
-~~~
-- MariaDB Setup -> Server.bat + root.bat -> root password -> CREATE DB
-1. Spring Boot 프로젝트 생성 
-  * a. FILE -> NEW -> 'Spring Starter Project' 실행
-2. 프로젝트명: study_maria, / Package: dev.mvc.study_maria
-    * Service URL : https://start.spring.io 웹 상에서 프로젝트 기초 소스 생성  
-    * Type : library 관리 툴, Gradle  
-    * Packaging : 배포 형태, War  
-    * Group : dev.boot  
-    * Artifact : study_maria   
-    * version : source version  
-    * Package : project main source package  
-    - v1: version 1.0, sb: Spring Boot, m3: Mybatis 3.0
-3. 의존 library 추가 : Spring boot Version(2.4.3)  
-    * Spring Boot Version : 2.4.3
-    * Spring Boot DevTools, Spring Web, MyBatis Framework, JDBC API : 4가지 의존성 추가
-    * [Finish] 버튼을 클릭 
-    - Oracle Driver 절대 설치하지 말것, 버그로 인해 드라이버 인식 불규칙
-4. /src/main/resources/application.properties 
-: 프로젝트에서 사용되는 오라클 계정 설정 + 포트설정 + DEVTOOLS 설정
-   * #MariaDB hikari 선언
-5. jsp 사용을위한 의존성 추가
-  ▷ build.gradle 편집
-6. Component scan "dev.mvc.resort_sbv2" 패키지 설정
-  - Controller, DAO, Process class 등을 자동으로 인식할 패키지 선언
-  ★★ 프로젝트별 파일명 : 프로젝트명Application.java★★
-▷ dev.boot.study_mariaApplication.java
-7. 관련 폴더 생성
-  1) JSP views: /src/main/webapp/WEB-INF/views
-  2) JSP views: /src/main/webapp/WEB-INF/lib
-  3) CSS: /src/main/resources/static/css
-  4) images: /src/main/resources/static/images
-  5) Javascript: /src/main/resources/static/js
-8. MyBatis 설정
-  1. /src/main/resources/mybatis 패키지 생성 ★★★★★
-  2. MyBatis 설정
-  - @MapperScan(basePackages= {"dev.mvc"}): DAO interface 검색 패키지 설정
-  ▷ /src/main/java/dev.mvc.study_maria.DatabaseConfiguration.java 설정
-9. MyBatis 설정 JUnit 테스트(/src/test/java 폴더에 테스트 기초 파일이 생성되어 있음)
-  ▷ /src/test/java/dev.mvc.resort_v1sbm3a.ResortV1sbm3aApplicationTests.java 설정
-  --> Debug as --> JUnit test : HikariDataSource (HikariPool-1)
-10. 프로젝트 실행 테스트
-프로젝트 선택 -> Run As -> Spring Boot App 실행
-11. WEB 접속 확인 : http://localhost:9091
-~~~
----
-**5) ERD**
-~~~
 
-~~~
+**4) ERD**
+
+---
+
+**5) Action**
+
+---
