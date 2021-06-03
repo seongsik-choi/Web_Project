@@ -34,5 +34,37 @@
 ---
 
 **5) Action**
+  - main(index) 
 
+![1](https://user-images.githubusercontent.com/76051264/120608707-7443d480-c48c-11eb-9582-4dd34f713a4e.JPG)
+
+  - 스터디 그룹 페이지  
+
+![2](https://user-images.githubusercontent.com/76051264/120608840-98071a80-c48c-11eb-9199-7b7420e85b94.JPG)
+
+  - 스터디 페이지  
+
+![3](https://user-images.githubusercontent.com/76051264/120608937-afde9e80-c48c-11eb-9ac0-b280a2b88ee4.JPG)
+
+  - 스터디에 해당하는 컨텐츠 등록 페이지 
+
+![6](https://user-images.githubusercontent.com/76051264/120609038-ca187c80-c48c-11eb-9466-1945f53eb524.JPG)
+
+  - 등록된 컨텐츠 페이지  
+
+![4](https://user-images.githubusercontent.com/76051264/120609110-dc92b600-c48c-11eb-8616-4a7c98f2d53b.JPG)
+
+
+  - 즐겨찾기 그룹과 해당하는 즐겨찾기 페이지  
+  
+![5](https://user-images.githubusercontent.com/76051264/120609309-03e98300-c48d-11eb-8f3e-bb698676c298.JPG)  
+ 
+ 
+  - 회원가입 페이지  
+  
+![8](https://user-images.githubusercontent.com/76051264/120609417-1c599d80-c48d-11eb-8cdc-c19d5586ea42.JPG)
+
+  - 회원 목록 페이지  
+  
+![7](https://user-images.githubusercontent.com/76051264/120609470-28455f80-c48d-11eb-8132-15ee5afc5719.JPG)
 ---
