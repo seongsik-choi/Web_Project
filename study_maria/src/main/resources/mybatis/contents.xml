@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<!-- dev.mvc.stugrp.CategrpDAOInter 패키지에 등록된 interface 명시,
+      패키지명과 인터페이스명은 실제로 존재해야함,
+      Spring이 내부적으로 자동으로 interface를 구현해줌. -->
+<mapper namespace="dev.mvc.contents.ContentsDAOInter"> 
+  <!-- 
+  insert: INSERT SQL 실행
+  id: Spring에서 호출시 사용
+  parameterType: 전달받는 데이터 객체
+  return: 등록한 레코드 갯수 리턴
+  SQL선언시 ';'은 삭제
+  #{}: 컬럼의 값
+  #{name}: public String getName(){...
+  -->
+  
+  <!--  [36][Contents] 등록 기능 제작(INSERT ~ INTO ~ VALUES ~) -->
+  <insert id="create" parameterType="dev.mvc.contents.ContentsVO">
+    INSERT INTO contents(adminno, stuno, name, intro, certi, id, passwd,
+                                      file1, file1saved, thumb1, size1)
+    VALUES(#{adminno}, #{stuno}, #{name}, #{intro}, #{certi}, #{id}, #{passwd}, 
+                #{file1}, #{file1saved}, #{thumb1}, #{size1})
+  </insert>
+  
+  <!--  [37] + [41 그리드][Contents] 테이블 이미지 기반 stuno별 목록 출력 변경(list_by_stuno.do) -->
+  <select id="list_by_stuno" parameterType="int"  resultType="dev.mvc.contents.ContentsVO" >
+    SELECT contentsno,adminno, stuno, recom, name, intro, certi, 
+                 id, passwd, file1, file1saved, thumb1, size1
+    FROM contents
+    WHERE stuno = #{stuno}
+    ORDER BY contentsno ASC
+  </select> 
+  
+<!-- [38][Contents] 검색 기능을 지원하는 목록
+ 스터디별 검색 목록 -->
+ <select id="list_by_stuno_search" resultType="dev.mvc.contents.ContentsVO" parameterType="HashMap">
+   SELECT contentsno, adminno, stuno, recom, name, intro, certi, id, passwd, file1, file1saved, thumb1, size1
+   FROM contents
+   <choose>
+     <when test="intro == null or intro == ''"> <!-- 검색하지 않는 경우, stuno가 hashmap에  key 값으로 지정 -->
+       WHERE stuno=#{stuno}
+     </when>
+     <otherwise> <!-- 검색하는 경우 -->
+     WHERE stuno=#{stuno} AND (name LIKE CONCAT('%', #{intro}, '%')
+                                             OR certi LIKE CONCAT('%', #{intro}, '%')
+                                             OR id LIKE CONCAT('%', #{intro}, '%')
+                                             OR intro LIKE CONCAT('%', #{intro}, '%'))
+     </otherwise>
+   </choose>
+   ORDER BY contentsno DESC   
+ </select>
+   
+   <!-- [38][Contents] 검색된 레코드의 갯수
+   스터디별 검색 레코드 갯수 -->
+ <select id="search_count" resultType="int" parameterType="HashMap">
+   SELECT COUNT(*) as cnt
+   FROM contents
+   <choose>
+     <when test="intro == null or intro == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+       WHERE stuno=#{stuno}
+     </when>
+     <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
+     WHERE stuno=#{stuno} AND (name LIKE CONCAT('%', #{intro}, '%')
+                                             OR certi LIKE CONCAT('%', #{intro}, '%')
+                                             OR id LIKE CONCAT('%', #{intro}, '%')
+                                             OR intro LIKE CONCAT('%', #{intro}, '%'))
+     </otherwise>
+   </choose>
+ </select>    
+ 
+  <!-- [40][Contents] 페이징, SQL, DAO, Process, list_by_stuno_search_paging.jsp 
+  스터디별 검색 목록 + 페이징 + 메인 이미지 -->   
+  <select id="list_by_stuno_search_paging" 
+             resultType="dev.mvc.contents.ContentsVO" parameterType="HashMap">
+   SELECT contentsno, adminno, stuno, recom, name, intro, certi, id, passwd, file1, file1saved, thumb1, size1
+   FROM contents
+   <choose>
+     <when test="intro == null or intro == ''"> <!-- 검색하지 않는 경우 -->
+       WHERE stuno=#{stuno}
+     </when>
+     <otherwise>
+     WHERE stuno=#{stuno} AND (name LIKE CONCAT('%', #{intro}, '%')
+                                             OR certi LIKE CONCAT('%', #{intro}, '%')
+                                             OR id LIKE CONCAT('%', #{intro}, '%')
+                                             OR intro LIKE CONCAT('%', #{intro}, '%'))
+     </otherwise>
+   </choose>
+   ORDER BY contentsno DESC
+   LIMIT #{offset}, #{page_size}
+     
+<!--  1 page: LIMIT 0, 10 
+        2 page: LIMIT 10, 10
+        3 page: LIMIT 20, 10 -->
+  </select>
+ 
+  <!--  [41 그리드 + paging 기능 추가 parameterType=map값을 받기 위해 HashMap Tpye  -->
+  <select id="list_by_stuno_grid_paging" parameterType="HashMap"  resultType="dev.mvc.contents.ContentsVO" >
+    SELECT contentsno,adminno, stuno, recom, name, intro, certi, 
+                 id, passwd, file1, file1saved, thumb1, size1
+    FROM contents
+    WHERE stuno = #{stuno}
+   ORDER BY contentsno DESC
+   LIMIT #{offset}, #{page_size}
+  </select>  
+  
+ <!--  연속 입력을 위한 43, 44는 기능이 없음 pass -->
+  
+  <!--  [42,5][Contents] 조회 기능의 제작
+    일반적인 조회 -->
+  <select id="read" resultType="dev.mvc.contents.ContentsVO" parameterType="int">
+    SELECT contentsno, adminno, stuno, recom, name, intro, certi, id, passwd,
+                 file1, file1saved, thumb1, size1
+    FROM contents
+    WHERE contentsno = #{contentsno }
+  </select>      
+  
+  <!-- [46][Contents] 텍스트 관련 수정 기능의 제작, HashMap 전달, 패스워드는 향후(AJAX 배운 후)
+  테스트 수정 -->
+  <update id="update_text" parameterType="dev.mvc.contents.ContentsVO">
+  UPDATE contents
+  SET name=#{name }, intro=#{intro }, certi=#{certi }, id=#{id }
+  WHERE contentsno = #{contentsno }
+  </update>  
+  
+  <!-- [47][Contents] 파일 수정 기능의 제작, 패스워드 검사(향후 Ajax 적용 구현)
+  파일 수정 -->
+  <update id="update_file" parameterType="dev.mvc.contents.ContentsVO">
+    UPDATE contents
+    SET  file1=#{file1 }, file1saved=#{file1saved }, thumb1=#{thumb1 }, size1=#{size1 }
+    WHERE contentsno = #{contentsno }
+  </update>    
+
+  <!-- [48][Contents] 삭제 기능의 제작, 패스워드 검사(향후 Ajax 적용 구현)
+  파일 수정 -->    
+  <delete id="delete" parameterType="int">
+    DELETE FROM contents
+    WHERE contentsno=#{contentsno}
+  </delete>  
+  
+  <!-- JSON 구현 -->
+  <select id="checkID" resultType="int" parameterType="String">
+    SELECT COUNT(id) as cnt
+    FROM contents
+    WHERE id=#{id}
+  </select>
+  
+  <!-- JSON 구현2, 동일 이름 확인 -->
+  <select id="checkNAME" resultType="int" parameterType="String">
+    SELECT COUNT(name) as cnt
+    FROM contents
+    WHERE name=#{name}
+  </select>
+  
+  <!-- recom(추천수) AJAX-->
+  <update id="update_recom" parameterType="int">
+    UPDATE contents
+    SET recom = recom + 1
+    WHERE contentsno = #{contentsno }
+  </update>   
+  
+</mapper> 

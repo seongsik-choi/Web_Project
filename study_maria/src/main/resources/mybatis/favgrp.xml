@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.favgrp.FavgrpDAOInter"> 
+
+  <!-- [15][Favgrp] favgrp 등록 기능 제작(INSERT~)   -->
+  <insert id="create" parameterType="dev.mvc.favgrp.FavgrpVO">
+    INSERT INTO favgrp(favgrpname, favgrpex, rdate)
+    VALUES(#{favgrpname}, #{favgrpex}, NOW())
+  </insert>
+   
+     <!-- [16][Favgrp] Favgrp 목록 출력 기능 제작(SELECT ~ FROM ~ ORDER BY ~), Bootstrap 적용, 등록 기능의 결합 -->
+  <select id="list_favgrpno_asc" resultType="dev.mvc.favgrp.FavgrpVO">
+    SELECT favgrpno, favgrpname, favgrpex, rdate 
+    FROM favgrp
+    ORDER BY favgrpno ASC
+  </select>
+   
+  <!-- [17][Favgrp] Favgrp 조회, 수정폼 기능의 제작, JSP 수정과 목록의 결합  : 조회폼
+         [19][Favgrp] Favgrp 삭제 폼 기능의 제작, JSP 삭제와 목록의 결합  : 삭제폼
+     - 조회, id: read, 입력: favgrpno, 리턴: FavgrpVO
+     - SELECT 사용 시 READ(결과 레코드 한개)인 경우 VO가 Return
+   -->
+  <select id="read" resultType="dev.mvc.favgrp.FavgrpVO" parameterType="int">
+    SELECT favgrpno, favgrpname, favgrpex, rdate
+    FROM favgrp
+    WHERE favgrpno=#{favgrpno}
+  </select>    
+  
+  <!-- [18][Favgrp] Favgrp 수정 처리 기능의 제작(UPDATE ~ SET ~ WHERE ~) : 조회처리
+     - 수정, id: update, 입력: FavgrpVO, 리턴: int -->
+  <update id="update" parameterType="dev.mvc.favgrp.FavgrpVO">
+    UPDATE favgrp
+    SET favgrpname=#{favgrpname}, favgrpex=#{favgrpex}
+    WHERE favgrpno = #{favgrpno}
+  </update>
+  
+  <!-- [20][Favgrp] Favgrp 삭제 처리 기능의 제작(DELETE FROM처~ WHERE ~)  : 삭제처리 
+     - 삭제 처리, id=delete, 입력: PK, 리턴: 삭제된 갯수 int -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM favgrp
+    WHERE favgrpno=#{favgrpno}
+  </delete>    
+</mapper> 
