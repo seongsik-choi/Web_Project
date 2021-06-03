@@ -29,6 +29,8 @@
 
 **4) ERD**
 
+![image](https://user-images.githubusercontent.com/76051264/120607034-c257d880-c48a-11eb-8b0a-19432cbf49ac.png)  
+
 ---
 
 **5) Action**
